@@ -228,7 +228,7 @@ public class DialogDrawablesFilter extends Dialog {
             try {
                 Pattern.compile(textField.getText());
                 disabled = false;
-            } catch (PatternSyntaxException e) {}
+            } catch (RuntimeException e) {}
         }
         
         TextButton textButton = findActor("apply");

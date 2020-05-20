@@ -29,7 +29,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -544,7 +543,7 @@ public class DialogTenPatch extends Dialog {
         String name = drawableData.file.nameWithoutExtension();
         var matcher = Pattern.compile(".*(?=\\.9$)").matcher(name);
         if (matcher.find()) {
-            name = matcher.group();
+            name = matcher.group(0);
         }
         originalRegion = main.getAtlasData().getAtlas().findRegion(name);
         tenPatchDrawable = new TenPatchDrawable(new int[0], new int[0], false, originalRegion);
@@ -810,7 +809,7 @@ public class DialogTenPatch extends Dialog {
         
         pixmap.drawRectangle(pixmap.getWidth() - 1, tenPatchData.contentTop, 1, (pixmap.getHeight() - tenPatchData.contentBottom) - tenPatchData.contentTop);
         
-        PixmapIO.writePNG(fileHandle, pixmap);
+        Utils.writePNG(fileHandle, pixmap);
         pixmap.dispose();
     }
     

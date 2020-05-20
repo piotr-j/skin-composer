@@ -23,6 +23,7 @@
  */
 package com.ray3k.skincomposer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -31,6 +32,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.ray3k.stripe.DraggableTextList;
 
 /**
  *
@@ -82,8 +84,12 @@ public class FreetypeSkin extends Skin {
                 parameter.hinting = hinting;
                 parameter.minFilter = minFilter;
                 parameter.magFilter = magFilter;
+
+                Gdx.app.log("FreetypeSkin", "Generating font " + path + " " + parameter.size + ", shadow " + parameter.shadowColor + " " + parameter.shadowOffsetX + ":" + parameter.shadowOffsetY);
+                //FreeTypeFontGenerator.setMaxTextureSize(2048);
                 FreeTypeFontGenerator generator = new FreeTypeFontGenerator(skinFile.parent().child(path));
                 BitmapFont font = generator.generateFont(parameter);
+                Gdx.app.log("FreetypeSkin", "Generated font " + path + " " + parameter.size);
                 skin.add(jsonData.name, font);
                 if (parameter.incremental) {
                     generator.dispose();

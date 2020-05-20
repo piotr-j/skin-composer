@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ray3k.skincomposer.GwtIncompatible;
 import com.ray3k.skincomposer.dialog.scenecomposer.DialogSceneComposerModel.*;
 import com.ray3k.skincomposer.utils.Utils;
 import com.squareup.javapoet.*;
@@ -21,6 +22,7 @@ import javax.lang.model.element.Modifier;
 
 import static com.ray3k.skincomposer.dialog.scenecomposer.DialogSceneComposerModel.*;
 
+@GwtIncompatible
 public class DialogSceneComposerJavaBuilder {
     private static ClassName nodeClassName;
     

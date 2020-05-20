@@ -183,7 +183,7 @@ public class AtlasData implements Json.Serializable {
                     }
                 }
                 FileHandle outputFile = targetDirectory.child(name);
-                PixmapIO.writePNG(outputFile, savePixmap);
+                Utils.writePNG(outputFile, savePixmap);
                 DrawableData drawable = new DrawableData(outputFile);
                 if (Utils.isNinePatch(outputFile.name())) {
                     drawable.type = DrawableType.NINE_PATCH;
@@ -265,7 +265,7 @@ public class AtlasData implements Json.Serializable {
     
     public void clearTempData() {
         FileHandle tempFolder = Main.appFolder.child("temp/");
-        tempFolder.deleteDirectory();
+//        tempFolder.deleteDirectory();
     }
     
     public void set(AtlasData atlasData) {

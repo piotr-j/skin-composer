@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
+<module rename-to="core">
+
+<!--	<source path="com/ray3k/skincomposer">-->
+<!--		<include name="Main.java" />-->
+<!--		<include name="CloseListener.java" />-->
+<!--		<include name="DesktopWorker.java" />-->
+<!--		<include name="FilesDroppedListener.java" />-->
+
+<!--		<include name="UndoableManager.java" />-->
+<!--		<include name="RootTable.java" />-->
+
+<!--		<include name="UndoableManager.java" />-->
+<!--		<include name="RootTable.java" />-->
+<!--		<include name="RootTable.RootTableEvent.java" />-->
+<!--		<include name="RootTable.RootTableEnum.java" />-->
+<!--		<include name="IbeamListener.java" />-->
+<!--		<include name="MainListener.java" />-->
+<!--		<include name="HandListener.java" />-->
+<!--		<include name="ScrollFocusListener.java" />-->
+<!--		<include name="ResizeArrowListener.java" />-->
+<!--		<include name="FreetypeSkin.java" />-->
+<!--		<include name="StageResizeEvent.java" />-->
+
+<!--		<include name="dialog/DialogFactory.java" />-->
+<!--		<include name="dialog/DialogListener.java" />-->
+
+<!--		<include name="data/JsonData.java" />-->
+<!--		<include name="data/AtlasData.java" />-->
+<!--		<include name="data/ProjectData.java" />-->
+
+<!--		<include name="utils/Utils.java" />-->
+<!--	</source>-->
+
+	<source path="com/ray3k/skincomposer"/>
+	<source path="com/ray3k/stripe"/>
+    <!-- reflection stuff ie serialized with json -->
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.PixmapPacker" />
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.tenpatch.TenPatchDrawable" />
+
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.TenPatchWidget.TenPatchWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableList.DraggableListStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.RangeSlider.RangeSliderStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.StripeMenuBar.StripeMenuBarStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.BrowseField.BrowseFieldStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuList.MenuListStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuButton.MenuButtonStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.Spinner.SpinnerStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.ResizeWidget.ResizeWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.NinePatchWidget.NinePatchWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.PopTable.PopTableStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableTextList.DraggableTextListStyle" />-->
+
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.TenPatchWidget$TenPatchWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableList$DraggableListStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.RangeSlider$RangeSliderStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.StripeMenuBar$StripeMenuBarStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.BrowseField$BrowseFieldStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuList$MenuListStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuButton$MenuButtonStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.Spinner$SpinnerStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.ResizeWidget$ResizeWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.NinePatchWidget$NinePatchWidgetStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.PopTable$PopTableStyle" />-->
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableTextList$DraggableTextListStyle" />-->
+
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.TenPatchWidget" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.BrowseField" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.MenuButton" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.ResizeWidget" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.skincomposer.NinePatchWidget" />
+
+<!--	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe" />-->
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.RangeSlider" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.StripeMenuBar" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.Spinner" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.PopTable" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableListStyle" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.ray3k.stripe.DraggableTextListStyle" />
+
+</module>

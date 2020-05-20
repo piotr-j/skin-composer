@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -335,19 +334,5 @@ public class DraggableList extends WidgetGroup {
     public DraggableListStyle getStyle() {
         return style;
     }
-    
-    public static class DraggableListStyle {
-        public Drawable dividerUp, dividerOver;
-        /** Optional **/
-        public Drawable background;
-        
-        public DraggableListStyle() {
-        }
-        
-        public DraggableListStyle(DraggableListStyle style) {
-            background = style.background;
-            dividerUp = style.dividerUp;
-            dividerOver = style.dividerOver;
-        }
-    }
+
 }

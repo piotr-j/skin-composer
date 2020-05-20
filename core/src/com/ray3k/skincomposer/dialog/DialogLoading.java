@@ -34,6 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.skincomposer.Main;
+import com.ray3k.skincomposer.utils.Utils;
 
 public class DialogLoading extends Dialog {
     private Runnable runnable;
@@ -52,7 +53,7 @@ public class DialogLoading extends Dialog {
         Dialog dialog = super.show(stage);
         RunnableAction runnableAction = new RunnableAction();
         runnableAction.setRunnable(() -> {
-            Thread thread = new Thread(() -> {
+            Utils.runAsync(() -> {
                 if (runnable != null) {
                     runnable.run();
                 }
@@ -60,7 +61,7 @@ public class DialogLoading extends Dialog {
                     hide();
                 });
             });
-            thread.start();
+
         });
         Action action = new SequenceAction(new DelayAction(.5f), runnableAction);
         addAction(action);

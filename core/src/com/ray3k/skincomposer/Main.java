@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.ray3k.skincomposer;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
@@ -30,6 +31,7 @@ import com.badlogic.gdx.Net.HttpMethods;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -96,7 +98,7 @@ public class Main extends ApplicationAdapter {
     public static FileHandle appFolder;
     private String[] args;
     public static Main main;
-    
+
     public Main (String[] args) {
         this.args = args;
         main = this;
@@ -104,13 +106,21 @@ public class Main extends ApplicationAdapter {
     
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
         if (Utils.isWindows()) {
             desktopWorker.closeSplashScreen();
         }
-        
-        appFolder = Gdx.files.external(".skincomposer/");
-        
+
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            appFolder = Gdx.files.external(".skincomposer/");
+        } else {
+            appFolder = Gdx.files.internal(".skincomposer/");
+        }
+//        appFolder = Gdx.files.external(".skincomposer/");
+
+        Gdx.app.log("Main", "Lading skin..");
         skin = new FreetypeSkin(Gdx.files.internal("skin-composer-ui/skin-composer-ui.json"));
+        Gdx.app.log("Main", "Skin loaded!");
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         
@@ -123,42 +133,43 @@ public class Main extends ApplicationAdapter {
     }
     
     private void initDefaults() {
-        if (Utils.isMac()) System.setProperty("java.awt.headless", "true");
-        
+        // we need platform specific code for this
+        Utils.initDefaults();
+
         skin.getFont("font").getData().markupEnabled = true;
         
         //copy defaults.json to temp folder if it doesn't exist
-        var fileHandle = appFolder.child("texturepacker/atlas-export-settings.json");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("atlas-export-settings.json").copyTo(fileHandle);
-        }
-        
-        //copy atlas settings for preview to temp folder if it doesn't exist
-        fileHandle = appFolder.child("texturepacker/atlas-internal-settings.json");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("atlas-internal-settings.json").copyTo(fileHandle);
-        }
-        
-        //copy preview fonts to preview fonts folder if they do not exist
-        fileHandle = appFolder.child("preview fonts/IBMPlexSerif-Medium.ttf");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("preview fonts/IBMPlexSerif-Medium.ttf").copyTo(fileHandle);
-        }
-        
-        fileHandle = appFolder.child("preview fonts/Pacifico-Regular.ttf");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("preview fonts/Pacifico-Regular.ttf").copyTo(fileHandle);
-        }
-        
-        fileHandle = appFolder.child("preview fonts/PressStart2P-Regular.ttf");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("preview fonts/PressStart2P-Regular.ttf").copyTo(fileHandle);
-        }
-        
-        fileHandle = appFolder.child("preview fonts/SourceSansPro-Regular.ttf");
-        if (!fileHandle.exists()) {
-            Gdx.files.internal("preview fonts/SourceSansPro-Regular.ttf").copyTo(fileHandle);
-        }
+//        var fileHandle = appFolder.child("texturepacker/atlas-export-settings.json");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("atlas-export-settings.json").copyTo(fileHandle);
+//        }
+//
+//        //copy atlas settings for preview to temp folder if it doesn't exist
+//        fileHandle = appFolder.child("texturepacker/atlas-internal-settings.json");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("atlas-internal-settings.json").copyTo(fileHandle);
+//        }
+//
+//        //copy preview fonts to preview fonts folder if they do not exist
+//        fileHandle = appFolder.child("preview fonts/IBMPlexSerif-Medium.ttf");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("preview fonts/IBMPlexSerif-Medium.ttf").copyTo(fileHandle);
+//        }
+//
+//        fileHandle = appFolder.child("preview fonts/Pacifico-Regular.ttf");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("preview fonts/Pacifico-Regular.ttf").copyTo(fileHandle);
+//        }
+//
+//        fileHandle = appFolder.child("preview fonts/PressStart2P-Regular.ttf");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("preview fonts/PressStart2P-Regular.ttf").copyTo(fileHandle);
+//        }
+//
+//        fileHandle = appFolder.child("preview fonts/SourceSansPro-Regular.ttf");
+//        if (!fileHandle.exists()) {
+//            Gdx.files.internal("preview fonts/SourceSansPro-Regular.ttf").copyTo(fileHandle);
+//        }
         
         ibeamListener = new IbeamListener();
         
@@ -367,36 +378,32 @@ public class Main extends ApplicationAdapter {
     }
 
     public static void checkForUpdates(Main main) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-                HttpRequest httpRequest = requestBuilder.newRequest().method(HttpMethods.GET).url("https://raw.githubusercontent.com/raeleus/skin-composer/master/version").build();
-                Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
-                    @Override
-                    public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                        newVersion = httpResponse.getResultAsString();
-                        Gdx.app.postRunnable(new Runnable() {
-                            @Override
-                            public void run() {
-                                main.rootTable.fire(new RootTable.RootTableEvent(RootTable.RootTableEnum.CHECK_FOR_UPDATES_COMPLETE));
-                            }
-                        });
-                    }
+        Utils.runAsync(() -> {
+            // this already is async but whatever
+            HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+            HttpRequest httpRequest = requestBuilder.newRequest().method(HttpMethods.GET).url("https://raw.githubusercontent.com/raeleus/skin-composer/master/version").build();
+            Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
+                @Override
+                public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                    newVersion = httpResponse.getResultAsString();
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            main.rootTable.fire(new RootTable.RootTableEvent(RootTable.RootTableEnum.CHECK_FOR_UPDATES_COMPLETE));
+                        }
+                    });
+                }
 
-                    @Override
-                    public void failed(Throwable t) {
-                        newVersion = VERSION;
-                    }
+                @Override
+                public void failed(Throwable t) {
+                    newVersion = VERSION;
+                }
 
-                    @Override
-                    public void cancelled() {
-                        newVersion = VERSION;
-                    }
-                });
-            }
+                @Override
+                public void cancelled() {
+                    newVersion = VERSION;
+                }
+            });
         });
-        
-        thread.start();
     }
 }

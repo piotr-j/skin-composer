@@ -47,8 +47,6 @@ import com.ray3k.skincomposer.utils.Utils;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class DialogBitmapFont extends Dialog {
@@ -58,7 +56,6 @@ public class DialogBitmapFont extends Dialog {
     private Table buttons;
     private FreeTypeFontData data;
     private FileHandle target;
-    private static DecimalFormat df;
     private Array<DialogBitmapFontListener> listeners;
     private TextFieldStyle previewStyle;
     private String previewText;
@@ -74,9 +71,6 @@ public class DialogBitmapFont extends Dialog {
         previewBGcolor = new Color(Color.WHITE);
 
         json = new Json(JsonWriter.OutputType.json);
-
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
-        df = new DecimalFormat("#.#", decimalFormatSymbols);
 
         this.data = new FreeTypeFontData();
         this.data.useCustomSerializer = true;
@@ -527,7 +521,7 @@ public class DialogBitmapFont extends Dialog {
         label = new Label("Gamma:", skin);
         bottom.add(label).right();
 
-        spinner = new Spinner(Double.parseDouble(df.format(data.gamma)), 1.0, false, Spinner.Orientation.HORIZONTAL, skin);
+        spinner = new Spinner(Double.parseDouble(Utils.format(data.gamma)), 1.0, false, Spinner.Orientation.HORIZONTAL, skin);
         spinner.setName("gamma");
         bottom.add(spinner).left().minWidth(100.0f);
 
@@ -655,7 +649,7 @@ public class DialogBitmapFont extends Dialog {
         label = new Label("Border Gamma:", skin);
         bottom.add(label).right();
 
-        spinner = new Spinner(Double.parseDouble(df.format(data.borderGamma)), 1.0, false, Spinner.Orientation.HORIZONTAL, skin);
+        spinner = new Spinner(Double.parseDouble(Utils.format(data.borderGamma)), 1.0, false, Spinner.Orientation.HORIZONTAL, skin);
         spinner.setName("borderGamma");
         bottom.add(spinner).left().minWidth(100.0f);
 
@@ -1242,7 +1236,7 @@ public class DialogBitmapFont extends Dialog {
             data.color = fontSettings.color;
         }
         
-        ((Spinner) findActor("gamma")).setValue(new BigDecimal(df.format(fontSettings.gamma)));
+        ((Spinner) findActor("gamma")).setValue(new BigDecimal(Utils.format(fontSettings.gamma)));
         data.gamma = fontSettings.gamma;
         
         ((Spinner) findActor("renderCount")).setValue(fontSettings.renderCount);
@@ -1268,7 +1262,7 @@ public class DialogBitmapFont extends Dialog {
         ((Button) findActor("borderStraight")).setChecked(fontSettings.borderStraight);
         data.borderStraight = fontSettings.borderStraight;
         
-        ((Spinner) findActor("borderGamma")).setValue(new BigDecimal(df.format(fontSettings.gamma)));
+        ((Spinner) findActor("borderGamma")).setValue(new BigDecimal(Utils.format(fontSettings.gamma)));
         data.borderGamma = fontSettings.borderGamma;
         
         ((Spinner) findActor("shadowOffsetX")).setValue(fontSettings.shadowOffsetX);

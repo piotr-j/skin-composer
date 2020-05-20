@@ -33,20 +33,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.FileImageInputStream;
-import java.awt.*;
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class Utils {
     public static String os;
@@ -228,35 +218,28 @@ public class Utils {
     public static float brightness(Color color) {
         return (float) (Math.sqrt(0.299f * Math.pow(color.r, 2) + 0.587 * Math.pow(color.g, 2) + 0.114 * Math.pow(color.b, 2)));
     }
-    
+
     public static void openFileExplorer(FileHandle startDirectory) throws IOException {
-        if (startDirectory.exists()) {
-            File file = startDirectory.file();
-            Desktop desktop = Desktop.getDesktop();
-            desktop.open(file);
-        } else {
-            throw new IOException("Directory doesn't exist: " + startDirectory.path());
-        }
+        UtilsCompat.openFileExplorer(startDirectory);
     }
-    
+
     public static boolean isWindows() {
         if (os == null) {
-            os = System.getProperty("os.name");
+            os = UtilsCompat.osName();
         }
-        
         return os.startsWith("Windows");
     }
-    
+
     public static boolean isLinux() {
         if (os == null) {
-            os = System.getProperty("os.name");
+            os = UtilsCompat.osName();
         }
         return os.startsWith("Linux");
     }
     
     public static boolean isMac() {
         if (os == null) {
-            os = System.getProperty("os.name");
+            os = UtilsCompat.osName();
         }
         return os.startsWith("Mac");
     }
@@ -269,27 +252,9 @@ public class Utils {
         
         return returnValue;
     }
-    
+
     public static boolean doesImageFitBox(FileHandle fileHandle, float width, float height) {
-        boolean result = false;
-        String suffix = fileHandle.extension();
-        Iterator<ImageReader> iter = ImageIO.getImageReadersBySuffix(suffix);
-        if (iter.hasNext()) {
-            ImageReader reader = iter.next();
-            try (var stream = new FileImageInputStream(fileHandle.file())) {
-                reader.setInput(stream);
-                int imageWidth = reader.getWidth(reader.getMinIndex());
-                int imageHeight = reader.getHeight(reader.getMinIndex());
-                result = imageWidth < width && imageHeight < height;
-            } catch (IOException e) {
-                Gdx.app.error(Utils.class.getName(), "error checking image dimensions", e);
-            } finally {
-                reader.dispose();
-            }
-        } else {
-            Gdx.app.error(Utils.class.getName(), "No reader available to check image dimensions");
-        }
-        return result;
+        return UtilsCompat.doesImageFitBox(fileHandle, width, height);
     }
     
     public static void writeWarningsToFile(Array<String> warnings, FileHandle file) {
@@ -298,11 +263,7 @@ public class Utils {
             file.writeString(formatted, true);
         }
     }
-    
-    /**
-     * Size of the buffer to read/write data
-     */
-    private static final int BUFFER_SIZE = 4096;
+
     /**
      * Extracts a zip file specified by the zipFilePath to a directory specified by
      * destDirectory (will be created if does not exists)
@@ -311,44 +272,9 @@ public class Utils {
      * @throws IOException
      */
     public static void unzip(FileHandle zipFile, FileHandle destDirectory) throws IOException {
-        destDirectory.mkdirs();
-        
-        InputStream is = zipFile.read();
-        ZipInputStream zis = new ZipInputStream(is);
-        
-        ZipEntry entry = zis.getNextEntry();
-        // iterates over entries in the zip file
-        while (entry != null) {
-            if (!entry.isDirectory()) {
-                // if the entry is a file, extracts it
-                extractFile(zis, destDirectory.child(entry.getName()));
-            } else {
-                // if the entry is a directory, make the directory
-                destDirectory.child(entry.getName()).mkdirs();
-            }
-            zis.closeEntry();
-            entry = zis.getNextEntry();
-        }
-        is.close();
-        zis.close();
+        UtilsCompat.unzip(zipFile, destDirectory);
     }
-    
-    /**
-     * Extracts a zip entry (file entry)
-     * @param zipIn
-     * @param filePath
-     * @throws IOException
-     */
-    private static void extractFile(ZipInputStream zipIn, FileHandle filePath) throws IOException {
-        BufferedOutputStream bos = new BufferedOutputStream(filePath.write(false));
-        byte[] bytesIn = new byte[BUFFER_SIZE];
-        int read = 0;
-        while ((read = zipIn.read(bytesIn)) != -1) {
-            bos.write(bytesIn, 0, read);
-        }
-        bos.close();
-    }
-    
+
     public static Pixmap textureRegionToPixmap(TextureRegion textureRegion) {
         var texture = textureRegion.getTexture();
         if (!texture.getTextureData().isPrepared()) {
@@ -417,5 +343,47 @@ public class Utils {
     
     public static boolean isNinePatch(String name) {
         return name.matches(".*\\.9\\.[a-zA-Z0-9]*$");
+    }
+
+    public static void RGBtoHSB (int r, int g, int b, float[] hsb) {
+        UtilsCompat.RGBtoHSB(r, g, b, hsb);
+    }
+
+    public static void beep () {
+        UtilsCompat.beep();
+    }
+
+    public static void writePNG (FileHandle outputFile, Pixmap savePixmap) {
+        UtilsCompat.writePNG(outputFile, savePixmap);
+    }
+
+    /**
+     * Pattern.quote() wrapper
+     */
+    public static String quote (String name) {
+        return UtilsCompat.quote(name);
+    }
+
+    /**
+     * @param runnable to be run in the background
+     */
+    public static void runAsync (Runnable runnable) {
+        UtilsCompat.runAsync(runnable);
+    }
+
+    public static String userHome () {
+        return Utils.sanitizeFilePath(UtilsCompat.userHome());
+    }
+
+    public static String path (String text) {
+        return UtilsCompat.path(text);
+    }
+
+    public static String format (float value) {
+        return UtilsCompat.formatDecimals(value);
+    }
+
+    public static void initDefaults () {
+        UtilsCompat.initDefaults();
     }
 }

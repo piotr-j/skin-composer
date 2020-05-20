@@ -39,6 +39,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.ray3k.skincomposer.Main;
+import com.ray3k.skincomposer.utils.Utils;
 import com.ray3k.stripe.Spinner;
 import com.ray3k.skincomposer.UndoableManager;
 import com.ray3k.skincomposer.UndoableManager.DeleteStyleUndoable;
@@ -643,7 +644,7 @@ public class DialogFactory {
                 dialog.getButtonTable().getCells().first().getActor().addListener(main.getHandListener());
                 dialog.getButtonTable().getCells().get(1).getActor().addListener(main.getHandListener());
                 dialog.getButtonTable().getCells().get(2).getActor().addListener(main.getHandListener());
-                java.awt.Toolkit.getDefaultToolkit().beep();
+                Utils.beep();
                 dialog.show(main.getStage());
                 return dialog;
             }

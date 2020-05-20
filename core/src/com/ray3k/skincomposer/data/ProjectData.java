@@ -28,6 +28,8 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.ray3k.skincomposer.Main;
 import com.ray3k.skincomposer.data.JsonData.ExportFormat;
 import com.ray3k.skincomposer.dialog.scenecomposer.DialogSceneComposerModel;
@@ -75,8 +77,8 @@ public class ProjectData implements Json.Serializable {
                 if (jsonData.isNull()) return null;
                 
                 try {
-                    return Class.forName(jsonData.asString());
-                } catch (ClassNotFoundException e) {
+                    return ClassReflection.forName(jsonData.asString());
+                } catch (ReflectionException e) {
                     return null;
                 }
             }
@@ -644,7 +646,7 @@ public class ProjectData implements Json.Serializable {
     }
 
     public String getLastImportExportPath() {
-        return (String) preferences.get("last-import-export-path", Utils.sanitizeFilePath(System.getProperty("user.home")) + "/");
+        return (String) preferences.get("last-import-export-path", Utils.userHome() + "/");
     }
 
     public void setLastImportExportPath(String importExportPath) {

@@ -36,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.skincomposer.*;
+import com.ray3k.skincomposer.utils.Utils;
 import com.ray3k.stripe.Spinner;
 import com.ray3k.stripe.Spinner.Orientation;
 
@@ -133,7 +134,7 @@ public class DialogColorPicker extends Dialog {
             tempVector = new Vector3();
         }
         float[] hsb = new float[3];
-        java.awt.Color.RGBtoHSB((int) (255.0f * r), (int) (255.0f * g), (int) (255.0f * b), hsb);
+        Utils.RGBtoHSB((int) (255.0f * r), (int) (255.0f * g), (int) (255.0f * b), hsb);
         tempVector.x = hsb[0];
         if (MathUtils.isEqual(tempVector.x, 1.0f)) {
             tempVector.x = 0;

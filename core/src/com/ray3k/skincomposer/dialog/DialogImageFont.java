@@ -1166,7 +1166,7 @@ public class DialogImageFont extends Dialog {
             var pixmap = new Pixmap(character.width, character.cropHeight, Pixmap.Format.RGBA8888);
             pixmap.setBlending(Pixmap.Blending.None);
             pixmap.drawPixmap(fontPixmap, 0, 0, character.x, character.cropY, character.width, character.cropHeight);
-            PixmapIO.writePNG(Main.appFolder.child("imagefont/characters/" + character.name + ".png"), pixmap);
+            Utils.writePNG(Main.appFolder.child("imagefont/characters/" + character.name + ".png"), pixmap);
             pixmap.dispose();
         }
         

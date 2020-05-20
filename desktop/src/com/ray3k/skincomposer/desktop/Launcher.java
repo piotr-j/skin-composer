@@ -311,7 +311,8 @@ public class Launcher implements DesktopWorker, Lwjgl3WindowListener {
 
     @Override
     public char getKeyName(int keyCode) {
-        int glfwKeyCode = Lwjgl3Input.getGlfwKeyCode(keyCode);
+        int glfwKeyCode = keyCode;
+//        int glfwKeyCode = Lwjgl3Input.getGlfwKeyCode(keyCode);
         try {
             var output = org.lwjgl.glfw.GLFW.glfwGetKeyName(glfwKeyCode, 0);
             return (output == null) ? ' ' : output.toLowerCase().charAt(0);

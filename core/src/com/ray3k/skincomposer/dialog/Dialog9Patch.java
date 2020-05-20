@@ -1235,7 +1235,7 @@ public class Dialog9Patch extends Dialog {
         savePixmap.drawRectangle(ninePatchContentLeft + 1, savePixmap.getHeight() - 1, savePixmap.getWidth() - ninePatchContentLeft - ninePatchContentRight - 2, 1);
         savePixmap.drawRectangle(savePixmap.getWidth() - 1, ninePatchContentTop + 1, 1, savePixmap.getHeight() - ninePatchContentBottom - ninePatchContentTop - 2);
         
-        PixmapIO.writePNG(targetFile, savePixmap);
+        Utils.writePNG(targetFile, savePixmap);
         
         originalImage.dispose();
         savePixmap.dispose();

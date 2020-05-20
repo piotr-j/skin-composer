@@ -41,6 +41,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap.Values;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.Sort;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.ray3k.skincomposer.FilesDroppedListener;
 import com.ray3k.skincomposer.Main;
 import com.ray3k.skincomposer.Undoable;
@@ -1325,7 +1326,7 @@ public class DialogDrawables extends Dialog {
         for (Array<StyleData> styles : values) {
             for (StyleData style : styles) {
                 for (StyleProperty styleProperty : style.properties.values()) {
-                    if (Drawable.class.isAssignableFrom(styleProperty.type)) {
+                    if (ClassReflection.isAssignableFrom(Drawable.class, styleProperty.type)) {
                         if (styleProperty.value != null && styleProperty.value.equals(oldName)) {
                             styleProperty.value = newName;
                         }

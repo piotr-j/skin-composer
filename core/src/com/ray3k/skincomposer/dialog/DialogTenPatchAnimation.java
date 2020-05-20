@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.*;
 import com.ray3k.skincomposer.HandListener;
 import com.ray3k.skincomposer.Main;
+import com.ray3k.skincomposer.utils.Utils;
 import com.ray3k.stripe.Spinner;
 import com.ray3k.skincomposer.data.DrawableData;
 import com.ray3k.skincomposer.data.StyleProperty;
@@ -89,7 +90,7 @@ public class DialogTenPatchAnimation extends Dialog {
         String name = drawableData.file.nameWithoutExtension();
         var matcher = Pattern.compile(".*(?=\\.9$)").matcher(name);
         if (matcher.find()) {
-            name = matcher.group();
+            name = matcher.group(0);
         }
         animatedDrawable.setRegion(main.getAtlasData().getAtlas().findRegion(name));
         var table = new Table();
@@ -436,7 +437,7 @@ public class DialogTenPatchAnimation extends Dialog {
             String name = drawableData.file.nameWithoutExtension();
             var matcher = Pattern.compile(".*(?=\\.9$)").matcher(name);
             if (matcher.find()) {
-                name = matcher.group();
+                name = matcher.group(0);
             }
             var region = main.getAtlasData().getAtlas().findRegion(name);
             drawableToRegionMap.put(drawableData, region);
@@ -467,7 +468,7 @@ public class DialogTenPatchAnimation extends Dialog {
                 String name = drawableData.file.nameWithoutExtension();
                 var matcher = Pattern.compile(".*(?=\\.9$)").matcher(name);
                 if (matcher.find()) {
-                    name = matcher.group();
+                    name = matcher.group(0);
                 }
                 var region = main.getAtlasData().getAtlas().findRegion(name);
                 drawableToRegionMap.put(drawableData, region);
@@ -770,11 +771,11 @@ public class DialogTenPatchAnimation extends Dialog {
                     var pattern = Pattern.compile(".+(?=_\\d+$)");
                     var matcher = pattern.matcher(drawable.name);
                     if (matcher.find()) {
-                        var name = matcher.group();
+                        var name = matcher.group(0);
     
                         var matches = new Array<DrawableData>();
                         for (var drawableData : main.getAtlasData().getDrawablePairs().keys()) {
-                            if (drawableData.name.matches(Pattern.quote(name) + "_\\d+")) {
+                            if (drawableData.name.matches(Utils.quote(name) + "_\\d+")) {
                                 matches.add(drawableData);
                             }
                         }

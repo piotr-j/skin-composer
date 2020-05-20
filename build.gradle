@@ -2,9 +2,11 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
+        classpath 'org.wisepersist:gwt-gradle-plugin:1.0.13'
     }
 }
 
@@ -16,9 +18,12 @@ allprojects {
     ext {
         appName = "SkinComposer"
         gdxVersion = '1.9.11-SNAPSHOT'
+        shapeDrawerVersion = '2.2.0'
+        tenPatchVersion = '5.0.0'
     }
 
     repositories {
+        jcenter()
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -46,6 +51,30 @@ project(":desktop") {
     }
 }
 
+project(":html") {
+    apply plugin: "java-library"
+    apply plugin: "gwt"
+    apply plugin: "war"
+
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+
+        compile "com.google.jsinterop:jsinterop-annotations:2.0.0"
+        compile "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+
+        compile "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10"
+        compile "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:1.9.10:sources"
+
+        compile "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
+        compile "com.github.raeleus.TenPatch:tenpatch:$tenPatchVersion:sources"
+
+    }
+}
+
 project(":core") {
     apply plugin: "java"
 
@@ -53,8 +82,8 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "com.github.raeleus.TenPatch:tenpatch:5.0.0"
-        implementation "space.earlygrey:shapedrawer:2.2.0"
+        compile "com.github.raeleus.TenPatch:tenpatch:$tenPatchVersion"
+        compile "space.earlygrey:shapedrawer:$shapeDrawerVersion"
         compile 'com.squareup:javapoet:1.12.1'
     }
 }

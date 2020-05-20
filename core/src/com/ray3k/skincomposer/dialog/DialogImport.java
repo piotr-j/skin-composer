@@ -260,8 +260,7 @@ public class DialogImport extends Dialog {
     private boolean checkPath() {
         TextField textField = findActor("path");
         try {
-            var path = Paths.get(textField.getText());
-            var fileHandle = Gdx.files.absolute(path.toString());
+            var fileHandle = Gdx.files.absolute(Utils.path(textField.getText()));
             return !fileHandle.isDirectory() && fileHandle.exists();
         } catch (Exception e) {
             return false;
